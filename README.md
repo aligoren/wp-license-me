@@ -42,7 +42,11 @@ Mobilde görüntüde değişme olmuyor. Tema ile birlikte hareket ettiğinden ka
 
 -----------------------
 
-![ss3.png](ss3.png) ![ss4.png](ss4.png)
+![ss3.png](ss3.png)
+
+-----------------------
+
+![ss4.png](ss4.png)
 
 #Katkı:
 
