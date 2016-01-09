@@ -1,5 +1,11 @@
 #wp-license-me
 
+**Güncelleme:**
+
+[oztaster](https://github.com/oztaster) sağolsun. Artık yazı eklerken lisans türü seçilebiliyor:
+
+![http://i.hizliresim.com/A53M8L.png](http://i.hizliresim.com/A53M8L.png)
+
 WordPress yazılarının altına lisans bildirimi ekler. Hangi lisans türünde bildirim yapılacaksa onu seçerek gösterebilirsiniz.
 
 Admin panelinde yer alan License Post sekmesindenden ayarlayabilirsiniz.
