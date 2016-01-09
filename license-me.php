@@ -28,7 +28,7 @@ function license_me_menu(){
 	$menu_title = 'License Posts';
 	$capability = 'manage_options';
 	$menu_slug  = 'license_me';
-	$function   = 'license_me_page';
+  $function   = 'license_admin_page';
 	$icon_url   = 'dashicons-universal-access';
 	$position   = 50;
 
@@ -39,73 +39,69 @@ function license_me_menu(){
 					$function,
 					$icon_url,
 					$position );
-
-	add_action( 'admin_init', 'update_license_me' );
-
 	}
 }
 
-
-if( !function_exists("update_license_me") ) {
-	function update_license_me() {
-		register_setting( 'license_me_settings', 'license_me' );
-	}
+function license_admin_page(){
+  ?>
+  <h1>Planlanıyor..</h1>
+  <?php
 }
 
+function prfx_license_meta() {
+    add_meta_box( 'license_meta', __( 'Set License Type', 'prfx-license' ), 'license_me_page', 'post', 'side' );
+}
+add_action( 'add_meta_boxes', 'prfx_license_meta' );
 
-if( !function_exists("license_me_page") ) {
-	function license_me_page(){
+function prfx_license_save( $post_id ) {
+  if( isset( $_POST[ 'post-license' ] ) ) {
+    update_post_meta( $post_id, 'post-license', $_POST[ 'post-license' ] );
+  }
+}
+add_action( 'save_post', 'prfx_license_save' );
+
+function license_me_page($post){
+    $prfx_stored_meta = get_post_meta( $post->ID );
 	?>
-	<h1>WordPress License Posts</h1>
-	<table class="form-table">
-		<tr valign="top">
-			<th scope="row">Selected License:</th>
-			<td>
-				<?php $type_license = get_option('license_me'); ?>
-				<input type="text" value="<?php echo $type_license ? get_option('license_me') : 'Select License';  ?>" readonly disabled size="44"
-				style="color:red; -moz-user-select: none; -webkit-user-select: none;
-				-ms-user-select:none; user-select:none;-o-user-select:none;">
-			</td>
-		</tr>
-	</table>
-	<form method="post" action="options.php">
-		<?php settings_fields( 'license_me_settings' ); ?>
-		<?php do_settings_sections( 'license_me_settings' ); ?>
-		<table class="form-table">
-			<tr valign="top">
-			<th scope="row">Set License Type:</th>
-				<td>
-					<select name="license_me">
-						<option value="Creative Commons License">Creative Commons License</option>
-						<option value="Apache License, Version 2.0">Apache License, Version 2.0</option>
-						<option value="BSD 3-Clause License">BSD 3-Clause License</option>
-						<option value="BSD 2-Clause License">BSD 2-Clause License</option>
-						<option value="GNU General Public License, version 3">GNU General Public License, version 3</option>
-						<option value="GNU General Public License, version 2">GNU General Public License, version 2</option>
-						<option value="The GNU Lesser General Public License, version 3.0">The GNU Lesser General Public License, version 3.0</option>
-						<option value="The GNU Lesser General Public License, version 2.1">The GNU Lesser General Public License, version 2.1</option>
-						<option value="The MIT License">The MIT License</option>
-						<option value="Mozilla Public License 2.0">Mozilla Public License 2.0</option>
-						<option value="Common Development and Distribution License">Common Development and Distribution License</option>
-						<option value="Eclipse Public License 1.0">Eclipse Public License 1.0</option>
-						<option value="Public Domain License">Public Domain License</option>
-						<option value="Unlicensed">Unlicensed</option>
-					</select>
-				</td>
-			</tr>
-		</table>
-		<?php submit_button(); ?>
-	</form>
+  <select name="post-license" id="post-license">
+       <option value="Creative Commons License" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'ccl' ); ?>><?php _e( 'Creative Commons License', 'prfx-license' )?></option>
+
+       <option value="Apache License, Version 2.0" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'Apache License, Version 2.0' ); ?>><?php _e( 'Apache License, Version 2.0', 'prfx-license' )?></option>
+
+       <option value="BSD 3-Clause License" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'BSD 3-Clause License' ); ?>><?php _e( 'BSD 3-Clause License', 'prfx-license' )?></option>
+
+       <option value="BSD 2-Clause License" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'BSD 2-Clause License' ); ?>><?php _e( 'BSD 2-Clause License', 'prfx-license' )?></option>
+
+       <option value="GNU General Public License, version 3" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'GNU General Public License, version 3' ); ?>><?php _e( 'GNU General Public License, version 3', 'prfx-license' )?></option>
+
+       <option value="GNU General Public License, version 2" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'GNU General Public License, version 2' ); ?>><?php _e( 'GNU General Public License, version 2' )?></option>
+
+       <option value="The GNU Lesser General Public License, version 3.0" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'The GNU Lesser General Public License, version 3.0' ); ?>><?php _e( 'The GNU Lesser General Public License, version 3.0', 'prfx-license' )?></option>
+
+       <option value="The GNU Lesser General Public License, version 2.1" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'The GNU Lesser General Public License, version 2.1' ); ?>><?php _e( 'The GNU Lesser General Public License, version 2.1', 'prfx-license' )?></option>
+
+       <option value="The MIT License" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'The MIT License' ); ?>><?php _e( 'The MIT License', 'prfx-license' )?></option>
+
+       <option value="Mozilla Public License 2.0" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'Mozilla Public License 2.0' ); ?>><?php _e( 'Mozilla Public License 2.0', 'prfx-license' )?></option>
+
+       <option value="Common Development and Distribution License" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'Common Development and Distribution License' ); ?>><?php _e( 'Common Development and Distribution License' )?></option>
+
+       <option value="Eclipse Public License 1.0" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'Eclipse Public License 1.0' ); ?>><?php _e( 'Eclipse Public License 1.0', 'prfx-license' )?></option>
+
+       <option value="Public Domain License" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'Public Domain License' ); ?>><?php _e( 'Public Domain License', 'prfx-license' )?></option>
+
+       <option value="Unlicensed" <?php if ( isset ( $prfx_stored_meta['post-license'] ) ) selected( $prfx_stored_meta['post-license'][0], 'Unlicensed' ); ?>><?php _e( 'Unlicensed', 'prfx-license' )?></option>
+   </select>
 	<?php
-	}
 }
 
 if(!function_exists("license_me"))
 {
   function license_me($content)
   {
-    $license_type = get_option('license_me');
     if (is_single()) {
+    $post_meta    = get_post_meta( get_the_ID() );
+    $license_type =  $post_meta['post-license'][0];
 		switch($license_type){
 			case 'Creative Commons License':
 				return $content.'<div id="license_box">'.creative_commons().'</div>';
@@ -154,9 +150,7 @@ if(!function_exists("license_me"))
 				break;
 	    }
     }
-
 	return $content;
-
   }
 }
 
