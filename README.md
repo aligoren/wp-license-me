@@ -2,7 +2,7 @@
 
 **Güncelleme:**
 
-[oztaster](https://github.com/oztaster) sağolsun. Artık yazı eklerken lisans türü seçilebiliyor:
+[oztaser](https://github.com/oztaser) sağolsun. Artık yazı eklerken lisans türü seçilebiliyor:
 
 ![http://i.hizliresim.com/A53M8L.png](http://i.hizliresim.com/A53M8L.png)
 
