@@ -4,9 +4,9 @@
 * Plugin URI: http://aligoren.com/license-me
 * Description: License Your Posts
 * Version: 1.0
-* Author: Ali GOREN
-* Author URI: http://aligoren.com
-* License: Public Domain
+* Author: Adil ÖZTAŞER, Ali GOREN
+* Author URI: http://aligoren.com, http://oztaser.com/
+* License: Unlicensed
 */
 
 require dirname( __FILE__ ) . '/license-type-functions.php';
