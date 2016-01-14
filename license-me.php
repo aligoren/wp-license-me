@@ -18,8 +18,9 @@ function style_for_front_end()
     wp_enqueue_style( 'license-style' );
 }
 add_action( 'wp_enqueue_scripts', 'style_for_front_end' );
-
 add_action( 'admin_menu', 'license_me_menu' );
+wp_enqueue_script('wp-color-picker');
+wp_enqueue_style( 'wp-color-picker' );
 
 if( !function_exists("license_me_menu") ) {
 function license_me_menu(){
@@ -40,11 +41,36 @@ function license_me_menu(){
 					$icon_url,
 					$position );
 	}
+  add_action( 'admin_init', 'update_license_me' );
+}
+
+function update_license_me() {
+  register_setting('license_me_settings', 'bg_color');
+  register_setting('license_me_settings', 'a_color');
+  register_setting('license_me_settings', 'text_color');
 }
 
 function license_admin_page(){
   ?>
-  <h1>Planlanıyor..</h1>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('#bg_color').wpColorPicker();
+        $('#a_color').wpColorPicker();
+        $('#text_color').wpColorPicker();
+    });
+    </script>
+
+  <form method="post" action="options.php">
+ 	  <?php settings_fields( 'license_me_settings' ); ?>
+		<?php do_settings_sections( 'license_me_settings' ); ?>
+       <h4>Arkaplan Rengi:</h4> <input name="bg_color" type="text" id="bg_color" value="<?php echo get_option("bg_color"); ?>" data-default-color="<?php echo get_option("bg_color"); ?>">
+       <h4>Link Rengi:</h4> <input name="a_color" type="text" id="a_color" value="<?php echo get_option("a_color"); ?>" data-default-color="<?php echo get_option("a_color"); ?>">
+       <h4>Yazı Rengi:</h4> <input name="text_color" type="text" id="text_color" value="<?php echo get_option("text_color"); ?>" data-default-color="<?php echo get_option("text_color"); ?>">
+
+		<?php submit_button(); ?>
+	</form>
+
+
   <?php
 }
 
@@ -95,63 +121,60 @@ function license_me_page($post){
 	<?php
 }
 
-if(!function_exists("license_me"))
+function license_me($content)
 {
-  function license_me($content)
-  {
-    if (is_single()) {
-    $post_meta    = get_post_meta( get_the_ID() );
-    $license_type =  $post_meta['post-license'][0];
-		switch($license_type){
-			case 'Creative Commons License':
-				return $content.'<div id="license_box">'.creative_commons().'</div>';
-				break;
-			case 'Apache License, Version 2.0':
-				return $content.'<div id="license_box">'.apache_v2().'</div>';
-				break;
-			case 'BSD 3-Clause License':
-				return $content.'<div id="license_box">'.bsd3_clause().'</div>';
-				break;
-			case 'BSD 2-Clause License':
-				return $content.'<div id="license_box">'.bsd2_clause().'</div>';
-				break;
-			case 'GNU General Public License, version 3':
-				return $content.'<div id="license_box">'.gpl_v3().'</div>';
-				break;
-			case 'GNU General Public License, version 2':
-				return $content.'<div id="license_box">'.gpl_v2().'</div>';
-				break;
-			case 'The GNU Lesser General Public License, version 3.0':
-				return $content.'<div id="license_box">'.lgpl_v3().'</div>';
-				break;
-			case 'The GNU Lesser General Public License, version 2.1':
-				return $content.'<div id="license_box">'.lgpl_v21().'</div>';
-				break;
-			case 'The MIT License':
-				return $content.'<div id="license_box">'.mit().'</div>';
-				break;
-			case 'Mozilla Public License 2.0':
-				return $content.'<div id="license_box">'.mpl().'</div>';
-				break;
-			case 'Common Development and Distribution License':
-				return $content.'<div id="license_box">'.cddl().'</div>';
-				break;
-			case 'Eclipse Public License 1.0':
-				return $content.'<div id="license_box">'.epl().'</div>';
-				break;
-			case 'Public Domain License':
-				return $content.'<div id="license_box">'.pdl().'</div>';
-				break;
-			case 'Unlicensed':
-				return $content.'<div id="license_box">'.ul().'</div>';
-				break;
-			default:
-				return $content;
-				break;
-	    }
+  if (is_single()) {
+  $post_meta    = get_post_meta( get_the_ID() );
+  $license_type =  $post_meta['post-license'][0];
+	switch($license_type){
+		case 'Creative Commons License':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.creative_commons().'</div>';
+			break;
+		case 'Apache License, Version 2.0':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.apache_v2().'</div>';
+			break;
+		case 'BSD 3-Clause License':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.bsd3_clause().'</div>';
+			break;
+		case 'BSD 2-Clause License':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.bsd2_clause().'</div>';
+			break;
+		case 'GNU General Public License, version 3':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important; color:'.get_option('text_color').'">'.gpl_v3().'</div>';
+			break;
+		case 'GNU General Public License, version 2':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.gpl_v2().'</div>';
+			break;
+		case 'The GNU Lesser General Public License, version 3.0':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.lgpl_v3().'</div>';
+			break;
+		case 'The GNU Lesser General Public License, version 2.1':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.lgpl_v21().'</div>';
+			break;
+		case 'The MIT License':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.mit().'</div>';
+			break;
+		case 'Mozilla Public License 2.0':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.mpl().'</div>';
+			break;
+		case 'Common Development and Distribution License':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.cddl().'</div>';
+			break;
+		case 'Eclipse Public License 1.0':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.epl().'</div>';
+			break;
+		case 'Public Domain License':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.pdl().'</div>';
+			break;
+		case 'Unlicensed':
+			return $content.'<div id="license_box" style="background-color:'. get_option("bg_color").' !important">'.ul().'</div>';
+			break;
+		default:
+			return $content;
+			break;
     }
-	return $content;
   }
+return $content;
 }
 
 add_filter('the_content', 'license_me');
