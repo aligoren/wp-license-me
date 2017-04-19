@@ -1,0 +1,19 @@
+{
+    "apache-2.0": {
+        "title": "Apache License 2.0",
+        "link": "https://opensource.org/licenses/Apache-2.0",
+        "image": "apache_v2.png"
+    },
+
+    "mit": {
+        "title": "MIT License",
+        "link": "https://opensource.org/licenses/MIT",
+        "image": "mit.png"
+    },
+
+    "gpl-3.0": {
+        "title": "GNU General Public License v3.0",
+        "link": "https://opensource.org/licenses/GPL-3.0",
+        "image": "gplv3.png"
+    }
+}
