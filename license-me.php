@@ -1,29 +1,26 @@
 <?php
 /**
-* Plugin Name: License Me
-* Plugin URI: http://aligoren.com/license-me
-* Description: License Your Posts
-* Version: 1.0
-* Author: Adil ÖZTAŞER, Ali GOREN
-* Author URI: http://aligoren.com, http://oztaser.com/
-* License: Unlicensed
+ * Plugin Name: License Me
+ * Plugin URI: https://github.com/aligoren/wp-license-me
+ * Description: License Your Posts
+ * Version: 1.0
+ * Author: Adil ÖZTAŞER, Ali GOREN
+ * License: Unlicensed
  */
 
 class WPLicenseMe {
 
-    const JSON_FILE_NAME = 'licenses.json';
-
     public function __construct()
     {
-        register_activation_hook( __FILE__, array( $this, 'install' )) ;
-
         $this->load_dependecies();
+
+        register_activation_hook( __FILE__, array( $this, 'install' ) );
     }
 
     static function install()
     {
-        // Load json file content
-        $json_content = file_get_contents( plugin_dir_url( __FILE__ )  . self::JSON_FILE_NAME );
+        $license = new License( false );
+        $json_content = $license->get_licenses();
 
         // Add an option for all licenses
         add_option( 'wp_license_me', $json_content, '', 'yes');
@@ -40,12 +37,10 @@ class WPLicenseMe {
      */
     private function load_dependecies()
     {
-        require_once( $this->get_dir_url() . 'admin/license-me-admin.php' );
-    }
+        require_once( plugin_dir_path( __FILE__ ) . 'lib/license.php' );
 
-    private function get_dir_url()
-    {
-        return plugin_dir_path( __FILE__ );
+        require_once( plugin_dir_path( __FILE__ ) . 'admin/license-me-admin.php' );
+        $admin = new LicenseMeAdmin();
     }
 }
 
