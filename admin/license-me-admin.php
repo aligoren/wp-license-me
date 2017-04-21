@@ -7,6 +7,14 @@ class LicenseMeAdmin {
         add_action( 'admin_menu', array( $this, 'add_admin_page') );
         add_action( 'add_meta_boxes', array( $this, 'register_meta_box' ) );
         add_action( 'save_post', array( $this, 'license_meta_save') );
+        add_action( 'admin_init', array( $this, 'license_register_settings' ) );
+    }
+
+    public function license_register_settings()
+    {
+        register_setting('license_me_settings', 'bg_color');
+        register_setting('license_me_settings', 'a_color');
+        register_setting('license_me_settings', 'text_color');
     }
 
     public function add_admin_page()

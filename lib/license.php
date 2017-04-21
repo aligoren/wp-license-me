@@ -14,18 +14,34 @@ class License {
         $this->base_dir = plugin_dir_path( dirname( __FILE__ . '/' ) );
     }
 
-    public function get_licenses()
+    private function load_file()
     {
-        // Load json file content
-        $json_content = file_get_contents( $this->base_dir . self::JSON_FILE );
+        return file_get_contents( $this->base_dir . self::JSON_FILE );
+    }
 
+    public function decode_data( $data )
+    {
         if ( $this->decode )
         {
-            return json_decode( $json_content, true );
+            return json_decode( $data, true );
         }
         else
         {
-            return $json_content;
+            return $data;
         }
+    }
+
+    public function get_licenses()
+    {
+        $json_content = $this->load_file();
+
+        return $this->decode_data( $json_content );
+    }
+
+    public function get_license( $key )
+    {
+        $license = get_option( $key );
+
+        return $this->decode_data( $license );
     }
 }

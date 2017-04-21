@@ -1,4 +1,4 @@
-#license_box {
+.license_box {
     font-family: georgia,serif;
     font-size: 16px;
     color: brown;
@@ -11,19 +11,24 @@
     border-radius: 10px;
     line-height: normal;
 }
-#license_box > a {
+
+.license_box > a {
     color: #09F;
     text-decoration: none;
 }
-#license_deco:hover {
+
+.license_deco:hover {
     text-decoration: underline;
 }
-#img_deco:hover {
+
+.img_deco:hover {
     text-decoration: none;
 }
-#img_license {
+
+.img_license {
     width: 80px;
     height: 15px;
     margin-top: 5px;
     padding-right: 10px;
+    border: 0px;
 }
