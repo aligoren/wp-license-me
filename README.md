@@ -1,4 +1,4 @@
-#wp-license-me
+# wp-license-me
 
 **Güncelleme:**
 
@@ -40,7 +40,7 @@ Public Domain License
 
 Unlicensed
 
-#Bazı ekran görüntüleri
+# Bazı ekran görüntüleri
 
 Mobilde görüntüde değişme olmuyor. Tema ile birlikte hareket ettiğinden kayma, iç içe geçme vs. olmuyor. En son görüntü (ss4) [blogumda](http://aligoren.com) denedikten sonra aldığım görsel.
 
@@ -54,6 +54,6 @@ Mobilde görüntüde değişme olmuyor. Tema ile birlikte hareket ettiğinden ka
 
 ![ss4.png](ss4.png)
 
-#Katkı:
+# Katkı:
 
 Katkı yaparak bu eklentiyi en iyi hale getirebilirsiniz.
